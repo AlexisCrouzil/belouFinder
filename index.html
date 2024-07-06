@@ -15,15 +15,24 @@
     </style>
 </head>
 <body>
-    <h1>My Simple Site</h1>
-    <input type="text" id="filter1" placeholder="Filter by Column 1">
-    <input type="text" id="filter2" placeholder="Filter by Column 2">
+    <h1>The Belou Finder!</h1>
+    <input type="text" id="filter1" placeholder="Filter by Player">
+    <input type="text" id="filter2" placeholder="Filter by Season">
     <table id="data-table">
         <thead>
             <tr>
-                <th>Column 1</th>
-                <th>Column 2</th>
-                <th>Column 3</th>
+                <th>Index</th>
+                <th>Jersey Number</th>
+                <th>.</th>
+                <th>Player Name</th>
+                <th>Age</th>
+                <th>Birth</th>
+                <th>Birth place</th>
+                <th>W</th>
+                <th>H</th>
+                <th>Play</th>
+                <th>Season</th>
+                <th>Position</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -45,7 +54,7 @@
 
         function filterData(rows, filter1, filter2) {
             return rows.filter(row => 
-                row[0].includes(filter1) && row[1].includes(filter2)
+                row[3].includes(filter1) && row[10].includes(filter2)
             );
         }
 
