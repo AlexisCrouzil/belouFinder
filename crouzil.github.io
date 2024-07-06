@@ -1,0 +1,100 @@
+[33mcommit e0fe77c33e3802c8f8c8e6a928f08bbdff59fe5e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: AlexisCrouzil <alexis.crouzil@gmail.com>
+Date:   Sat Jul 6 20:06:16 2024 +0200
+
+    V1 html
+
+[1mdiff --git a/index.html b/index.html[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ab97ab1[m
+[1m--- /dev/null[m
+[1m+++ b/index.html[m
+[36m@@ -0,0 +1,88 @@[m
+[32m+[m[32m<!DOCTYPE html>[m
+[32m+[m[32m<html lang="en">[m
+[32m+[m[32m<head>[m
+[32m+[m[32m    <meta charset="UTF-8">[m
+[32m+[m[32m    <meta name="viewport" content="width=device-width, initial-scale=1.0">[m
+[32m+[m[32m    <title>Simple Site</title>[m
+[32m+[m[32m    <style>[m
+[32m+[m[32m        table, th, td {[m
+[32m+[m[32m            border: 1px solid black;[m
+[32m+[m[32m            border-collapse: collapse;[m
+[32m+[m[32m        }[m
+[32m+[m[32m        th, td {[m
+[32m+[m[32m            padding: 10px;[m
+[32m+[m[32m        }[m
+[32m+[m[32m    </style>[m
+[32m+[m[32m</head>[m
+[32m+[m[32m<body>[m
+[32m+[m[32m    <h1>My Simple Site</h1>[m
+[32m+[m[32m    <input type="text" id="filter1" placeholder="Filter by Column 1">[m
+[32m+[m[32m    <input type="text" id="filter2" placeholder="Filter by Column 2">[m
+[32m+[m[32m    <table id="data-table">[m
+[32m+[m[32m        <thead>[m
+[32m+[m[32m            <tr>[m
+[32m+[m[32m                <th>Column 1</th>[m
+[32m+[m[32m                <th>Column 2</th>[m
+[32m+[m[32m                <th>Column 3</th>[m
+[32m+[m[32m            </tr>[m
+[32m+[m[32m        </thead>[m
+[32m+[m[32m        <tbody></tbody>[m
+[32m+[m[32m    </table>[m
+[32m+[m
+[32m+[m[32m    <script>[m
+[32m+[m[32m        async function fetchData() {[m
+[32m+[m[32m            const response = await fetch('Effectif_saison_tbhc_DB_clean.csv');[m
+[32m+[m[32m            const data = await response.text();[m
+[32m+[m[32m            return data;[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        function parseCSV(csv, delimiter = ',') {[m
+[32m+[m[32m            const lines = csv.trim().split('\n');[m
+[32m+[m[32m            const headers = lines[0].split(delimiter);[m
+[32m+[m[32m            const rows = lines.slice(1).map(line => line.split(delimiter));[m
+[32m+[m[32m            return { headers, rows };[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        function filterData(rows, filter1, filter2) {[m
+[32m+[m[32m            return rows.filter(row =>[m[41m [m
+[32m+[m[32m                row[0].includes(filter1) && row[1].includes(filter2)[m
+[32m+[m[32m            );[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        function renderTable(headers, rows) {[m
+[32m+[m[32m            const table = document.getElementById('data-table');[m
+[32m+[m[32m            const tbody = table.querySelector('tbody');[m
+[32m+[m[32m            tbody.innerHTML = '';[m
+[32m+[m[32m            rows.forEach(row => {[m
+[32m+[m[32m                const tr = document.createElement('tr');[m
+[32m+[m[32m                row.forEach(cell => {[m
+[32m+[m[32m                    const td = document.createElement('td');[m
+[32m+[m[32m                    td.textContent = cell;[m
+[32m+[m[32m                    tr.appendChild(td);[m
+[32m+[m[32m                });[m
+[32m+[m[32m                tbody.appendChild(tr);[m
+[32m+[m[32m            });[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        document.addEventListener('DOMContentLoaded', async () => {[m
+[32m+[m[32m            const csv = await fetchData();[m
+[32m+[m[32m            const { headers, rows } = parseCSV(csv);[m
+[32m+[m[32m            renderTable(headers, rows);[m
+[32m+[m
+[32m+[m[32m            document.getElementById('filter1').addEventListener('input', (event) => {[m
+[32m+[m[32m                const filter1 = event.target.value;[m
+[32m+[m[32m                const filter2 = document.getElementById('filter2').value;[m
+[32m+[m[32m                const filteredRows = filterData(rows, filter1, filter2);[m
+[32m+[m[32m                renderTable(headers, filteredRows);[m
+[32m+[m[32m            });[m
+[32m+[m
+[32m+[m[32m            document.getElementById('filter2').addEventListener('input', (event) => {[m
+[32m+[m[32m                const filter1 = document.getElementById('filter1').value;[m
+[32m+[m[32m                const filter2 = event.target.value;[m
+[32m+[m[32m                const filteredRows = filterData(rows, filter1, filter2);[m
+[32m+[m[32m                renderTable(headers, filteredRows);[m
+[32m+[m[32m            });[m
+[32m+[m[32m        });[m
+[32m+[m[32m    </script>[m
+[32m+[m[32m</body>[m
+[32m+[m[32m</html>[m

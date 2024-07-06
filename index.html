@@ -36,7 +36,7 @@
             return data;
         }
 
-        function parseCSV(csv, delimiter = ',') {
+        function parseCSV(csv, delimiter = ';') {
             const lines = csv.trim().split('\n');
             const headers = lines[0].split(delimiter);
             const rows = lines.slice(1).map(line => line.split(delimiter));
